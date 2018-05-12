@@ -25,38 +25,21 @@ if(strtolower(substr(PHP_OS, 0, 3)) == 'win') {
     $ua = "Mozilla/5.0 (Linux; Android 5.1.1; Andromax A16C3H Build/LMY47V) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36";
     system("clear");
 }
-function update() {
-	echo $GG . "[*] Updating [*]" . $X . "\n\n";
-        if(!function_exists('file_get_contents')) {
-            die($RR . "Function Disabled" . $X . "\n");
-        }
-        $upload = file_get_contents('https://raw.githubusercontent.com/Cvar1984/Spyder/master/upload');
-        $tulis  = fopen('upload', 'w+');
-        fwrite($tulis, $upload);
-        fclose($tulis);
-        echo $GG . "[*] Uploader Wordlist Updated [*]\n\n";
-        $admin = file_get_contents('https://raw.githubusercontent.com/Cvar1984/Spyder/master/admin');
-        $tulis = fopen('admin', 'w+');
-        fwrite($tulis, $admin);
-        fclose($tulis);
-        echo $GG . "[*] Admin Wordlist Updated [*]" . $X . "\n";
-        die();
-}
 function ngirim($url, $isi){
-    		$ch = curl_init ($url);
-    		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-    		curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1);
-    		curl_setopt ($ch, CURLOPT_USERAGENT, $ua);
-    		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    		curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    		curl_setopt ($ch, CURLOPT_POST, 1);
-    		curl_setopt ($ch, CURLOPT_POSTFIELDS, $isi);
-    		curl_setopt($ch, CURLOPT_COOKIEJAR,'cookie');
-    		curl_setopt($ch, CURLOPT_COOKIEFILE,'cookie');
-    		
-    		$ch=curl_exec($ch);
-    		return $ch;
-    		}
+ global $ua;
+ $ch = curl_init($url);
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+ curl_setopt($ch, CURLOPT_USERAGENT, $ua);
+ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+ curl_setopt($ch, CURLOPT_POST, 1);
+ curl_setopt($ch, CURLOPT_POSTFIELDS, $isi);
+ curl_setopt($ch, CURLOPT_COOKIEJAR,'cookie');
+ curl_setopt($ch, CURLOPT_COOKIEFILE,'cookie');
+ curl_exec($ch);
+ curl_close($ch);
+}
 echo $Y."
  ___           __               __ 
 /  _/___ _  _ _\ |___  _ __  | /  \ |
@@ -166,33 +149,33 @@ echo $YY."[!] File Uploaded To ../../elfinder/files/".$nama_doang." [!]".$X."\n\
     echo "String Loaded : " . $Y . $count . $G . "\n";
     foreach($list as $list) {
         $url = $argv[1].$list;
-        $ch  = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
+        $ch  = curl_init($url);
         curl_setopt($ch, CURLOPT_USERAGENT, $ua);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_exec($ch);
         $header = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
         $write  = "";
         if(!($header == 404 OR $header == 0)) {
-            $hdr   = "
+            $hdr= "
 header : " . $header . "
 Url    : " . $url;
             $tulis = fopen("result.txt", "a");
             fwrite($tulis, $hdr);
             fclose($tulis);
-            $header = $B . $header . $G;
+            $header = $B.$header.$G;
         } else {
-            $header = $R . $header . $G;
+            $header = $R.$header.$G;
         }
-        echo "Url    : " . $Y . $url . $G . "\n";
-        echo "Header : " . $header . "\n";
+        echo "Url    : ".$Y.$url.$G."\n";
+        echo "Header : ".$header."\n";
     }
-    echo $R . "=========================== Cvar1984 ))=====(@)>" . $X . "\n";
+    echo $R . "=========================== Cvar1984 ))=====(@)>".$X."\n";
 } else {
-    echo $Y . "--admin,   -a\tSearch Admin Pages\n";
+    echo $Y;
+    echo "--admin,   -a\tSearch Admin Pages\n";
     echo "--upload,  -u\tSearch Upload Pages\n";
     echo "--cms,     -c\tCMS Scan\n";
     echo "--domain,  -d\tSubdomain Scan\n";
