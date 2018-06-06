@@ -50,7 +50,7 @@ echo $R."\n++++++++++++++++++++++++++++++++++++++";
 echo $B."\nAuthor  : Cvar1984                   ".$R."+";
 echo $B."\nGithub  : https://github.com/Cvar1984".$R."+";
 echo $B."\nTeam    : BlackHole Security         ".$R."+";
-echo $B."\nVersion : 0.6.1                      ".$R."+";
+echo $B."\nVersion : 0.6.2                      ".$R."+";
 echo $B."\nDate    : 31-03-2018                 ".$R."+";
 echo $R."\n++++++++++++++++++++++++++++++++++++++".$G."\n\n";
 function_exists("curl_init") OR die($YY . "[!] cUrl Is Missing [!]".$X."\n");
@@ -60,6 +60,7 @@ if(!(isset($argv[1]) AND isset($argv[2]))) {
 	echo "--upload,  -u\tSearch Upload Pages\n";
 	echo "--cms,     -c\tCMS Scan\n";
 	echo "--domain,  -d\tSubdomain Scan\n";
+	echo "--nmap,    -n\tNmap Port Scan\n";
 	echo "--exploit, -e\tExploit Elfinder\n";
 	echo "--update,  -U\tUpdate Wordlist\n\n";
 	echo "Example : ".$GG."php ".$argv[0]." http://example.com --admin".$X."\n";
@@ -146,6 +147,18 @@ if(!(isset($argv[1]) AND isset($argv[2]))) {
 	} else {
 		echo $RR."[!] Upload Failed 2 [!]".$X."\n";
 	}
+		die();
+	} elseif($argv[2] == '--nmap' OR $argv[2] == '-n') {
+		if(preg_match("/^http:/",$argv[1])) {
+			$argv[1]=str_replace('http://','',$argv[1]);
+		} elseif(preg_match("/^https:/",$argv[1])) {
+			$argv[1]=str_replace('https://','',$argv[1]);
+		}
+		$result=file_get_contents("http://api.hackertarget.com/nmap/?q=".$argv[1]);
+		$result=str_replace('\x20'," ",$result);
+		$result=str_replace('\n',"\n",$result);
+		$result=str_replace('\r',"\r",$result);
+		echo $result;
 		die();
 	} else {
 		die($YY . "[!] Parameter False [!]" . $X . "\n");
