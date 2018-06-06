@@ -7,6 +7,8 @@ sites/default/files/up.php
 default/files/up.php
 files/up.php
 po-admin/js/plugins/uploader/upload.php
+admin/js/plugins/uploader/upload.php
+js/plugins/uploader/upload.php
 components/com_sexycontactform/fileupload/index.php
 wp-content/themes/synoptic/lib/avatarupload/upload.php
 wp-content/themes/eptonic/functions/jwpanel/scripts/valums_uploader/php.php

