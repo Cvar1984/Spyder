@@ -1,0 +1,5 @@
+{
+    "require": {
+        "jezzdk/detect-cms": "^1.0"
+    }
+}
